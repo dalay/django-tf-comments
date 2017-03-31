@@ -1,0 +1,9 @@
+К статье "{{ comment.content_object.title }}" был добавлен новый комментарий.
+{% if comment.parent %}
+Данный комментарий является ответом на уже существующий:
+{{ comment.parent.comment }}
+{% endif %}
+Имя автора комментария: {{ comment.name }}
+IP отправителя: {{ comment.ip_address }}
+Текст комментария:
+{{ comment.comment }}

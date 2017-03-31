@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="raw comments" class="unpublished">
+    <div id="comments-header">
+        <h3 class="comments title">Неопубликованные комментарии</h3>
+    </div>
+    {% for comment in comments %}
+    <div class="comment">
+        <div class="comment-info">
+        <div class="comment-object">
+            К статье: <a href="{{ comment.content_object.get_absolute_url }}">
+                {{ comment.content_object }}
+            </a>
+        </div>
+            {{ comment.name }} | {{ comment.created }} | {{ comment.ip_address }}</div>
+        <div class="body">
+        {% if comment.parent %}
+            <div class="blockquote">
+            <div class="quote-author">{{ comment.parent.get_comment_name }} сказал(а):</div>
+                {{ comment.parent.comment|striptags|truncatechars:100 }}
+            </div>
+        {% endif %}
+        {{ comment.comment }}
+        <ul class="links">
+            <li>
+                <a class="button small-button ajax" href="{% url 'comment-edit' comment.pk %}?next={{ request.path }}">Править</a>
+            </li>
+            <li>
+                <a class="button small-button" href="{% url 'comment-delete' comment.pk %}?next={{ request.path }}">Удалить</a>
+            </li>
+            {% if request.user.is_staff %}
+                <li>
+                    <a class="button small-button" href="{% url 'comment-status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
+                </li>
+            {% endif %}
+        </ul>
+        </div>
+    </div>
+    {% endfor %}
+{% if comments.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if comments.has_previous %}
+            <a href="?p={{ comments.previous_page_number }}#comments">previous</a>
+            {% endif %}
+            <span class="current">
+                Страница {{ comments.number }} из {{ comments.paginator.num_pages }}.
+            </span>
+            {% if comments.has_next %}
+            <a href="?p={{ comments.next_page_number }}#comments">next</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

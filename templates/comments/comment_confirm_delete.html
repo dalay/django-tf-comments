@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <h2>Вы точно решили удалить комментарий "{{ object }}"?</h2>
+    <input type="submit" value="Удалить" />
+</form>
+{% endblock %}

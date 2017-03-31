@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>
+    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+</h1>
+{% include "comments/_form.html" %}
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{{ block.super }}
+<script src="{% static 'comments/comments.js' %}"></script>
+{% endblock scripts %}

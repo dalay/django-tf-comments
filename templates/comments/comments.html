@@ -1,0 +1,32 @@
+<div id="comments">
+    <div id="comments-header">
+        <h3 class="comments title">Комментарии</h3>
+        <a class="button button-primary ajax" id="comment-add-new" href="{% url 'comment-new' content_type.id object_id %}">+ Добавить новый</a>
+    </div>
+    {% for comment in comments %}
+        {% include 'comments/_comment.html' with comment=comment %}
+    {% endfor %}
+    
+{% if comments.paginator.num_pages > 1 %}
+    <ul class="pagination">
+    {% if comments.has_previous %}
+        <li><a href="?comments={{ comments.previous_page_number }}#comments">&#9668;</a></li>
+        <li><a href="?comments=1#comments">1</a></li>
+        {% if comments.number > 2 %}
+        <li>...</li>
+        {% endif %}
+    {% endif %}
+        <li class="active">
+         {{ comments.number }}
+        </li>
+    {% if comments.has_next %}
+        {% if comments.next_page_number != comments.paginator.num_pages %}
+        <li>...</li>
+        {% endif %}
+        <li><a href="?comments={{ comments.paginator.num_pages }}#comments">{{ comments.paginator.num_pages }}</a></li>
+        <li><a href="?comments={{ comments.next_page_number }}#comments">&#9658;</a></li>
+    {% endif %}
+    </ul>
+{% endif %}
+</div>
+

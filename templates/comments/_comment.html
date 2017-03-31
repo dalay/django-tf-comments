@@ -1,0 +1,37 @@
+<div class="row comment" id="comment-{{ comment.id }}">
+    <div class="author-info">
+        <div class="comment-name">
+            {% if comment.name %}
+        {{ comment.name }} | {{ comment.ip_address }}
+    {% else %}
+        {{ comment.user }}
+    {% endif %}
+        </div>
+        <small class="submitted">{{ comment.created }}</small>
+    </div>
+    <div class="body">
+        {% if comment.parent %}
+        <div class="blockquote">
+        <div class="quote-author">{{ comment.parent.get_comment_name }} сказал(а):</div>
+            {{ comment.parent.comment|striptags|truncatechars:100 }}
+        </div>
+        {% endif %}
+        {{ comment.comment|safe|linebreaks }}
+        <ul class="links">
+            <li>
+                <a class="ajax button small-button" href="{% url 'comment-reply' comment.pk %}">Ответить</a>
+            </li>
+            {% if request.user.is_staff %}
+                <li>
+                    <a class="ajax button small-button" href="{% url 'comment-edit' comment.pk %}">Править</a>
+                </li>
+            <li>
+                <a class=" button small-button" href="{% url 'comment-delete' comment.pk %}">Удалить</a>
+            </li>
+            <li>
+                <a class="button small-button" href="{% url 'comment-status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
