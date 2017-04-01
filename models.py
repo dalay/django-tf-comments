@@ -11,8 +11,8 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
-    parent = models.ForeignKey('self', related_name="childs", 
-                                   blank=True, null=True)
+    parent = models.ForeignKey('self', related_name="childs",
+                               blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True)
     name = models.CharField('имя', max_length=60, blank=True, null=True)
     comment = models.TextField('комментарий', max_length=3000)
@@ -71,4 +71,3 @@ class Comment(models.Model):
         Получаем url объекта, к которому текущий коммент принадлежит.
         '''
         return self.content_object.get_absolute_url()
-

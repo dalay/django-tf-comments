@@ -20,7 +20,8 @@ class UnpublishedCommentsList(ListView):
     '''
     Список неопубликованных комментов.
     '''
-    queryset = Comment.objects.filter(status=False).select_related('parent', 'user')
+    queryset = Comment.objects.filter(
+        status=False).select_related('parent', 'user')
     context_object_name = 'comments'
     paginate_by = 20
     template_name = 'comments/unpub_comments.html'
@@ -39,6 +40,7 @@ class CommentCommonMixin(object):
     Проверяем в нем права пользователя и определяем страницу для редиректа 
     после сохранения.
     '''
+
     def check_permissions(self, comment):
         """
         Если текущий пользователь не суперюзер и не автор
@@ -158,7 +160,7 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
             self.obj_content_type = get_object_or_404(
                 ContentType, pk=self.kwargs['content_type_id'])
             self.obj = get_object_or_404(self.obj_content_type.model_class(),
-                    pk=self.kwargs['object_id'])
+                                         pk=self.kwargs['object_id'])
         return super(CommentCreate, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
@@ -268,7 +270,8 @@ def comment_status_toggle(request, pk):
     Переключение статуса комментария (опубликован/неопубликова).
     '''
     try:
-        cur_status = Comment.objects.values_list('status', flat=True).get(pk=pk)
+        cur_status = Comment.objects.values_list(
+            'status', flat=True).get(pk=pk)
     except Comment.DoesNotExist:
         raise Http404
 
