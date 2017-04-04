@@ -90,6 +90,8 @@ $(document).on('submit', '.modal form', function(e) {
     });
 
     var $this = $(this);
+    var modal = $this.parents('.modal')
+    modal.hide();
 
     $.ajax({
         type: "POST",
@@ -97,7 +99,6 @@ $(document).on('submit', '.modal form', function(e) {
         url: $this.attr('action'),
         cache: false,
         success: function(data) {
-            var modal = $this.parents('.modal')
             if (data.is_update_view) {
                 $('#comment-' + data.comment_id).html(data.comment);
             } else {
@@ -108,9 +109,10 @@ $(document).on('submit', '.modal form', function(e) {
                     'class': 'messages-ajax info',
                 }).html(data.flash_message);
                 $this.parent('.form-wraper').html(msg);
+                modal.show();
                 setTimeout(function() {
                         modal.remove();
-                }, 2000);
+                }, 3000);
             }
             else{
                 modal.remove();
