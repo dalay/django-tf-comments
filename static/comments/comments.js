@@ -97,7 +97,7 @@ $(document).on('submit', '.modal form', function(e) {
         url: $this.attr('action'),
         cache: false,
         success: function(data) {
-            $this.parents('.modal').remove();
+            var modal = $this.parents('.modal')
             if (data.is_update_view) {
                 $('#comment-' + data.comment_id).html(data.comment);
             } else {
@@ -107,7 +107,13 @@ $(document).on('submit', '.modal form', function(e) {
                 var msg = $('<div/>', {
                     'class': 'messages-ajax info',
                 }).html(data.flash_message);
-                $('#comments-header').after(msg);
+                $this.parent('.form-wraper').html(msg);
+                setTimeout(function() {
+                        modal.remove();
+                }, 2000);
+            }
+            else{
+                modal.remove();
             }
             $('a.ajax').show();
         },
