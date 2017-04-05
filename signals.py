@@ -17,9 +17,9 @@ def notify_comment_onmoderate(sender, comment, **kwargs):
     '''
     subject = 'Новый комментарий на сайте'
     template = get_template('comments/notify_comment_onmoderate.txt')
-    context = Context({
-        'comment': comment
-    })
+    context = {
+        'comment': comment,
+    }
     content = template.render(context)
     email = EmailMessage(
         subject,
