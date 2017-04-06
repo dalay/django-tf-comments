@@ -1,7 +1,6 @@
 from django.dispatch import Signal
 from django.dispatch import receiver
 from django.core.mail import EmailMessage
-from django.template import Context
 from django.template.loader import get_template
 from django.conf import settings
 
