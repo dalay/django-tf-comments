@@ -54,6 +54,7 @@ $(document).on('click', 'a.ajax', function(e) {
             $('.close-button').on('click', function(e) {
                 e.preventDefault();
                 modal.remove();
+                $this.show();
             })
         },
         error: function(data) {
