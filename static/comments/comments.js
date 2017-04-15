@@ -113,7 +113,7 @@ $(document).on('submit', '.modal form', function(e) {
                 modal.show();
                 setTimeout(function() {
                         modal.remove();
-                }, 3000);
+                }, 4000);
             }
             else{
                 modal.remove();

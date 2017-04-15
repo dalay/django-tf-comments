@@ -107,9 +107,8 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         # Анониму шлем мессадж о том что его коммент будет опубликован
         # только после проверки модером.
         if self.request.user.is_anonymous():
-            msg = 'Комментарий отправлен на \
-                                    проверку модератора.\
-                                    До проверки он не видим на сайте.'
+            msg = 'Комментарий будет виден остальным после проверки. \
+                    Или не будет, если проверку не пройдет.'
         if self.request.is_ajax():
             data = {}
             if hasattr(self, 'is_update_view'):
