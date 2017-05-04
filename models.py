@@ -30,7 +30,7 @@ class Comment(models.Model):
     status = models.BooleanField('Опубликовано', db_index=True, default=True)
 
     class Meta:
-        ordering = ["created"]
+        ordering = ["-created"]
 
     @property
     def get_comment_name(self):

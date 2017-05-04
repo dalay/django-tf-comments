@@ -5,4 +5,4 @@ class CommentsConfig(AppConfig):
     name = 'comments'
 
     def ready(self):
-        from comments import signals
+        from comments import tasks
