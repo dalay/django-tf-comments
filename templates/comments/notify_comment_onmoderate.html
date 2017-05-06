@@ -1,6 +1,7 @@
 {% extends 'comments/mail_base.html' %}
 {% block content %}
-    К статье '<a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object.title }}</a>' был добавлен новый комментарий.
+{% with object_url=comment.content_object.get_absolute_url comment_url=comment.get_absolute_url %}
+    К статье '<a href="{{ base_url }}{{ object_url }}">{{ comment.content_object.title }}</a>' был добавлен новый комментарий.
     {% if comment.parent %}
     Данный комментарий является ответом на уже существующий:
     <blockquote>
@@ -8,11 +9,12 @@
     </blockquote>
     {% endif %}
 <ul>
-    <li>Ссылка на статью: <a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object.get_absolute_url }}</a></li>
+    <li>Ссылка на статью: <a href="{{ base_url }}{{ object_url }}">{{ base_url }}{{ object_url }}</a></li>
     <li>Имя автора комментария: {{ comment.name }}</li>
     <li>IP отправителя: {{ comment.ip_address }}</li>
-    <li>URL комментария: <a href="{{ comment.get_absolute_url }}">{{ comment.get_absolute_url }}</a></li>
+    <li>URL комментария: <a href="{{ base_url }}{{ comment_url }}">{{ base_url }}{{ comment_url }}</a></li>
 </ul>
+{% endwith %}
     Текст комментария:
     <div>
     {{ comment.comment }}

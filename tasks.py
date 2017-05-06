@@ -14,6 +14,7 @@ def notify_comment_onmoderate(comment_pk):
     template = get_template('comments/notify_comment_onmoderate.html')
     context = { 
         'comment': comment,
+        'base_url': getattr(settings, 'BASE_URL', '')
     }   
     content = template.render(context)
     email = EmailMessage(
