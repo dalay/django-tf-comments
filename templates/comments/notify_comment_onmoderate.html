@@ -8,9 +8,10 @@
     </blockquote>
     {% endif %}
 <ul>
+    <li>Ссылка на статью: <a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object.get_absolute_url }}</a></li>
     <li>Имя автора комментария: {{ comment.name }}</li>
     <li>IP отправителя: {{ comment.ip_address }}</li>
-    <li>URL комментария: <a href="{{ comment.get_absolute_url }}">перейти</a></li>
+    <li>URL комментария: <a href="{{ comment.get_absolute_url }}">{{ comment.get_absolute_url }}</a></li>
 </ul>
     Текст комментария:
     <div>
