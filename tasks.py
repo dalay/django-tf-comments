@@ -11,7 +11,7 @@ from .signals import comment_added_onmoderate
 def notify_comment_onmoderate(comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     subject = 'Новый комментарий на сайте'
-    template = get_template('comments/notify_comment_onmoderate.txt')
+    template = get_template('comments/notify_comment_onmoderate.html')
     context = { 
         'comment': comment,
     }   
@@ -22,6 +22,7 @@ def notify_comment_onmoderate(comment_pk):
         settings.SERVER_EMAIL,
         [a[1] for a in settings.ADMINS],
     )   
+    email.content_subtype = "html"
     email.send()
 
 @receiver(comment_added_onmoderate)

@@ -1,0 +1,13 @@
+{% extends 'comments/mail_base.html' %}
+{% block content %}
+К статье '<a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object.title }}</a>' был добавлен новый комментарий.
+    {% if comment.parent %}
+    Данный комментарий является ответом на уже существующий:
+    {{ comment.parent.comment|striptags|truncatechars:50 }}
+    {% endif %}
+    Имя автора комментария: {{ comment.name }}
+    IP отправителя: {{ comment.ip_address }}
+    URL комментария: <a href="{{ comment.get_absolute_url }}">перейти</a>
+    Текст комментария:
+    {{ comment.comment }}
+{% endblock content %}
