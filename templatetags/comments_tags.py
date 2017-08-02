@@ -8,6 +8,19 @@ from comments.settings import COMMENTS_ON_PAGE
 
 register = template.Library()
 
+# @register.simple_tag
+# def last_comment(obj):
+#     ct = ContentType.objects.get_for_model(obj)
+#     last = Comment.objects.filter(content_type=ct).last()
+#     return last
+
+@register.simple_tag
+def comments_count(obj):
+    ct = ContentType.objects.get_for_model(obj)
+    count = Comment.objects.filter(object_id=obj.pk, 
+            content_type=ct).count()
+    return count
+
 @register.inclusion_tag('comments/comments.html', takes_context=True)
 def get_comments(context, obj):
     content_type=ContentType.objects.get_for_model(obj)

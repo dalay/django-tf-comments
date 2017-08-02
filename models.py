@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from comments.signals import comment_added_onmoderate
+from . import settings
 
 
 class Comment(models.Model):
@@ -30,7 +31,7 @@ class Comment(models.Model):
     status = models.BooleanField('Опубликовано', db_index=True, default=True)
 
     class Meta:
-        ordering = ["-created"]
+        ordering = [settings.COMMENTS_ORDERING]
 
     @property
     def get_comment_name(self):
