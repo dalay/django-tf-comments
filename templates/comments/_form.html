@@ -1,9 +1,9 @@
 <div class="form-wraper">
     {% if parent %}
-    <h2>Ваш ответ на комментарий:</h2>
+    <h2>Ваш ответ на комментарий</h2>
     <p>{{ parent.short_comment_text }}</p>
     {% else %}
-    <h2>Ваш комментарий к публикации:</h2>
+    <h2>Ваш комментарий к пocту</h2>
     {% endif %}
     <form method="post">
         {% csrf_token %}
