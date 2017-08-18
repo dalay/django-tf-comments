@@ -1,4 +1,5 @@
 from django import template
+from django.utils import formats
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 from django.contrib.contenttypes.models import ContentType
@@ -44,6 +45,15 @@ def get_comments(context, obj):
             'content_type': content_type
             }
 
+@register.simple_tag
+def last_comment_datetime(obj):
+    ct = ContentType.objects.get_for_model(obj)
+    qs = Comment.objects.filter(object_id=obj.pk, 
+            content_type=ct)
+    if qs.exists():
+        return formats.date_format(qs.latest('created').created, "SHORT_DATETIME_FORMAT")
+    return 'тишина'
+    
 # @register.inclusion_tag('comments/unpub_comments.html', takes_context=True)
 # def get_unpublished_comments(context, items_on_page=20):
 #     comment_list = Comment.objects.filter(status=False).select_related('parent',
