@@ -1,9 +1,33 @@
+from django.core.cache import cache
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from comments.signals import comment_added_onmoderate
-from . import settings
+
+
+class CommentCashedManager(models.Manager):
+    '''
+    Менеджер для получение кэшированных результатов запростов.
+    '''
+    @classmethod
+    def cache_key(cls, *args):
+        return 'comments:%s' % (':'.join(str(x) for x in args))
+
+    def object_comments_count(self, obj):
+        ct = ContentType.objects.get_for_model(obj)
+        key = self.cache_key('comments_count', ct.pk, obj.pk)
+        count = cache.get(key)
+        if not count:
+            count = Comment.objects.filter(object_id=obj.pk, 
+                    content_type=ct).count()
+            if count:
+                cache.set(key, count)
+        return count
+    
+    # def comments_for_object(self, obj):
+    #     pass
+
 
 
 class Comment(models.Model):
@@ -30,8 +54,13 @@ class Comment(models.Model):
                                    auto_now=True, editable=False)
     status = models.BooleanField('Опубликовано', db_index=True, default=True)
 
+    cached = CommentCashedManager()
+    objects = models.Manager()
+
     class Meta:
-        ordering = [settings.COMMENTS_ORDERING]
+        # По-умолчанию сортируем по нисходящей: сначала - последние комменты.
+        # Можно изменить в темплейт-теге вызова комментов для объекта.
+        ordering = ['-created']
 
     @property
     def get_comment_name(self):

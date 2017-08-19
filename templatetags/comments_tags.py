@@ -17,18 +17,24 @@ register = template.Library()
 
 @register.simple_tag
 def comments_count(obj):
-    ct = ContentType.objects.get_for_model(obj)
-    count = Comment.objects.filter(object_id=obj.pk, 
-            content_type=ct).count()
-    return count
+    return Comment.cached.object_comments_count(obj)
 
 @register.inclusion_tag('comments/comments.html', takes_context=True)
-def get_comments(context, obj):
+def get_comments(context, obj, order_by='desc'):
+    '''
+    Возращает комментарии для указанного объекта.
+
+    Сортировка по-умолчанию - по нисходящей. Если нужно иначе, то
+    следует в шаблоне передать для  переменной order_by значение 'asc'.
+    '''
     content_type=ContentType.objects.get_for_model(obj)
 
     comment_list = Comment.objects.filter(object_id=obj.pk, 
             content_type=content_type,
             status=True).select_related('parent', 'user')
+
+    if order_by == 'asc':
+        comment_list = comment_list.order_by('created')
 
     page = context['request'].GET.get('comments')
     paginator = Paginator(comment_list, COMMENTS_ON_PAGE)
