@@ -2,8 +2,8 @@
 {% for comment in comments %}
 <li>
     <strong class="user-name">{% if comment.user.username %}{{ comment.user.username }}
-        {% else %}{{ comment.name }}{% endif %}</strong>: {{ comment.comment|truncatewords:10 }}
-    <small><a href="{{ comment.content_object.get_absolute_url }}#comments">{{ comment.content_object.title|truncatewords:5 }}</a>{{ comment.created }}</small>
+        {% else %}{{ comment.name }}{% endif %}</strong>: <a href="{{ comment.content_object.get_absolute_url }}#comments" title="{{ comment.content_object.title|truncatewords:5 }}">{{ comment.comment|truncatewords:10 }}
+    </a><small>{{ comment.created }}</small>
 </li>
 {% endfor %}
 </ul>
