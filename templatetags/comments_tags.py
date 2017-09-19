@@ -35,12 +35,13 @@ def latest_comments(limit=5, obj=None):
 
 
 @register.inclusion_tag('comments/comments.html', takes_context=True)
-def get_comments(context, obj, order_by='desc'):
+def get_comments(context, obj, order_by=None):
     '''
     Возращает комментарии для указанного объекта.
 
     Сортировка по-умолчанию - по нисходящей. Если нужно иначе, то
     следует в шаблоне передать для  переменной order_by значение 'asc'.
+    Сортировака по-умолчанию - сначала новые (DESC).
     '''
     content_type = ContentType.objects.get_for_model(obj)
 
