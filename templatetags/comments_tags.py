@@ -9,19 +9,30 @@ from comments.settings import COMMENTS_ON_PAGE
 
 register = template.Library()
 
-# def last_comment(obj):
-#     ct = ContentType.objects.get_for_model(obj)
-#     return Comment.objects.filter(content_type=ct).last()
-
 
 @register.simple_tag
 def comments_count(obj):
+    '''
+    Подсчет колличества комментов для конкретного объекта.
+    '''
     return Comment.cached.object_comments_count(obj)
 
+
 @register.inclusion_tag('comments/latest_commetns.html')
-def latest_comments(limit=5):
-    comments = Comment.objects.filter(status=1).order_by('-created')[:limit]
-    return {'comments': comments}
+def latest_comments(limit=5, obj=None):
+    '''
+    Получаем последние комменты со статусом True.
+    '''
+    qs = Comment.objects.filter(status=True).order_by('-created')
+    # Если "пришел" объект, то получаем последние комменты для
+    # его модели.
+    if obj:
+        ct = ContentType.get_for_model(obj)
+        qs.filter(content_type=ct)
+    if limit > 0:
+        comments = qs[:limit]
+        return {'comments': comments}
+
 
 @register.inclusion_tag('comments/comments.html', takes_context=True)
 def get_comments(context, obj, order_by='desc'):
@@ -64,22 +75,3 @@ def last_comment_datetime(obj):
     if qs.exists():
         return formats.date_format(qs.latest('created').created, "SHORT_DATETIME_FORMAT")
     return 'тишина'
-
-# @register.inclusion_tag('comments/unpub_comments.html', takes_context=True)
-# def get_unpublished_comments(context, items_on_page=20):
-#     comment_list = Comment.objects.filter(status=False).select_related('parent',
-#             'user', 'content_object')
-
-#     paginator = Paginator(comment_list, items_on_page)
-#     page = context['request'].GET.get('p')
-#     try:
-#         comments = paginator.page(page)
-#     except PageNotAnInteger:
-#         comments = paginator.page(1)
-#     except EmptyPage:
-#         raise Http404
-#     return {"comments": comments }
-
-# @register.inclusion_tag('comments/_comment.html')
-# def get_comment(comment):
-#     return { "comment": comment, }
