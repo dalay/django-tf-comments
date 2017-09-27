@@ -41,7 +41,7 @@ $(document).on('click', 'a.ajax', function(e) {
         cache: false,
         success: function(data) {
             var modal = $('<div/>', {
-                'class': 'modal'
+                'class': 'modal comment'
             });
             var formData = $(data.form).prepend($('<a/>', {
                 'href': '#close',
@@ -109,7 +109,7 @@ $(document).on('submit', '.modal form', function(e) {
                 var msg = $('<div/>', {
                     'class': 'messages-ajax info',
                 }).html(data.flash_message);
-                $this.parent('.form-wraper').html(msg);
+                $this.parent('.form-wraper').addClass('message info').html(msg);
                 modal.show();
                 setTimeout(function() {
                         modal.remove();
