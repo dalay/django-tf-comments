@@ -108,7 +108,9 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         # только после проверки модером.
         if self.request.user.is_anonymous():
             msg = 'Комментарий будет виден остальным после проверки. \
-                    Или не будет, если проверку не пройдет.'
+                   Сообщения, содержащие спам, оскорбления, мат \
+                   или не несущие в себе какого-либо смысла, \
+                   данную проверку не пройдут.'
         if self.request.is_ajax():
             data = {}
             if hasattr(self, 'is_update_view'):
