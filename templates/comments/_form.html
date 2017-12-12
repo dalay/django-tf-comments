@@ -3,15 +3,14 @@
     <h2>Ваш ответ на комментарий</h2>
     <p>{{ parent.short_comment_text }}</p>
     {% else %}
-    <h2>Ваш комментарий к пocту</h2>
+    <h2>Ваш комментарий к публикации</h2>
     {% endif %}
     <form method="post">
         {% csrf_token %}
         <div class="row">
-            {% if request.user.is_authenticated %}
-   Вы авторизированы как {{ request.user }}
+            {% if user.is_authenticated %}
+            Вы авторизированы как <strong>{{ user.username }}</strong>
         {% endif %}
-        <!-- {{ form }} -->
     {% for field in form %}
         <div class="field-wrapper {{ field.name }}">
             {{ field.errors  }}
@@ -27,5 +26,10 @@
     {% load antispam %}
     {% render_antispam_field %}
         </div>
+        {% if user.is_anonymous %}
+        <div class="achtung">
+            Сообщения, содержащие спам, оскорбления, мат или не несущие в себе какого-либо смысла, будут удалены.
+        </div>
+        {% endif %}
         <input class="button button-primary" type="submit" value="Сохранить"></form>
 </div>

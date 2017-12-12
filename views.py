@@ -89,6 +89,7 @@ class CommentAddUpdateMixin(CommentCommonMixin):
 
             form = self.get_form()
             context = {}
+            context['user'] = request.user
             context['form'] = form
             context['csrf_token'] = get_token(self.request)
             # if self.parent:
@@ -107,10 +108,7 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         # Анониму шлем мессадж о том что его коммент будет опубликован
         # только после проверки модером.
         if self.request.user.is_anonymous():
-            msg = 'Комментарий будет виден остальным после проверки. \
-                   Сообщения, содержащие спам, оскорбления, мат \
-                   или не несущие в себе какого-либо смысла, \
-                   данную проверку не пройдут.'
+            msg = 'Комментарий отправлен на проверку.'
         if self.request.is_ajax():
             data = {}
             if hasattr(self, 'is_update_view'):
@@ -123,10 +121,9 @@ class CommentAddUpdateMixin(CommentCommonMixin):
                 # с определенным текстом.
                 data['flash_message'] = msg
             return JsonResponse(data)
-        else:
-            if msg:
-                messages.add_message(self.request, messages.INFO, msg)
-            return response
+        if msg:
+            messages.add_message(self.request, messages.INFO, msg)
+        return response
 
     def form_invalid(self, form):
         '''
@@ -135,8 +132,7 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         response = super(CommentAddUpdateMixin, self).form_invalid(form)
         if self.request.is_ajax():
             return JsonResponse(form.errors, status=400)
-        else:
-            return response
+        return response
 
 
 class CommentCreate(CommentAddUpdateMixin, CreateView):
