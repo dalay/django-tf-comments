@@ -32,13 +32,12 @@ class CommentCashedManager(models.Manager):
 
 class Comment(models.Model):
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-
     parent = models.ForeignKey('self', related_name="childs",
-                               blank=True, null=True)
-    user = models.ForeignKey(User, blank=True, null=True)
+                               blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField('имя', max_length=60, blank=True, null=True)
     comment = models.TextField('комментарий', max_length=3000)
     email = models.EmailField(blank=True)

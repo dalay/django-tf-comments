@@ -107,7 +107,7 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         msg = ''
         # Анониму шлем мессадж о том что его коммент будет опубликован
         # только после проверки модером.
-        if self.request.user.is_anonymous():
+        if self.request.user.is_anonymous:
             msg = 'Комментарий отправлен на проверку.'
         if self.request.is_ajax():
             data = {}
@@ -168,7 +168,7 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
         - ответ на уже имеющийся).
         '''
         user = self.request.user
-        if user is not None and not user.is_anonymous():
+        if user is not None and not user.is_anonymous:
             form.instance.user = user
             form.instance.email = user.email
         elif form.instance.name:
@@ -180,7 +180,7 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
             form.instance.object_id = self.parent.object_id
         else:
             form.instance.object_id = self.kwargs['object_id']
-        form.instance.status = user.is_authenticated()
+        form.instance.status = user.is_authenticated
         return super(CommentCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):

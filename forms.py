@@ -29,7 +29,7 @@ class CommentForm(ModelForm):
             del self.fields["status"]
         # Убираем поле имени, если пользователь авторизован. Оно будет 
         # подставлено автоматом.
-        if user is not None and not user.is_anonymous():
+        if user is not None and not user.is_anonymous:
             del self.fields["name"]
 
     # def clean(self):
