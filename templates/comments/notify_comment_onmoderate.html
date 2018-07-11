@@ -1,17 +1,18 @@
 {% extends 'comments/mail_base.html' %}
+{% load i18n %}
 {% block content %}
-    К статье '<a href="{{ base_url }}{{ comment.get_absolute_url }}">{{ comment.content_object.title }}</a>' был добавлен новый комментарий.
+{% trans 'A new comment was added to the publication' %}: <a href="{{ base_url }}{{ comment.get_absolute_url }}">{{ comment.content_object.title }}</a>
     {% if comment.parent %}
-    Данный комментарий является ответом на уже существующий:
+    {% trans 'This comment is a reply to an existing one' %}:
     <blockquote>
     {{ comment.parent.comment|striptags|truncatechars:50 }}
     </blockquote>
     {% endif %}
 <ul>
-    <li><strong>Автор</strong>: {{ comment.name }}</li>
-    <li><strong>IP отправителя</strong>: {{ comment.ip_address }}</li>
+    <li><strong>{% trans "Author's name" %}</strong>: {{ comment.name }}</li>
+    <li><strong>{% trans "Author's IP" %}</strong>: {{ comment.ip_address }}</li>
 </ul>
-<strong>Текст комментария</strong>:
+<strong>{% trans 'Comment text' %}</strong>:
     <div>
     {{ comment.comment }}
     </div>

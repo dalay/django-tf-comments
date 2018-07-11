@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    <h2>Вы точно решили удалить комментарий "{{ object }}"?</h2>
-    <input type="submit" value="Удалить" />
+    <h2>{% blocktrans %}Are you sure you want to delete the comment "{{ object }}"?{% endblocktrans %}</h2>
+    <input type="submit" value="{% trans 'Yes, delete' %}" />
 </form>
 {% endblock %}

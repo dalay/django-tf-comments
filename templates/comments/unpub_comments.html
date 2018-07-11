@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 <div id="raw comments" class="unpublished">
     <div id="comments-header">
-        <h3 class="comments title">Неопубликованные комментарии</h3>
+        <h3 class="comments title">{% trans 'Unpublished Comments' %}</h3>
     </div>
     {% for comment in comments %}
     <div class="comment">
         <div class="comment-info">
         <div class="comment-object">
-            К статье: <a href="{{ comment.content_object.get_absolute_url }}">
+            {% trans 'To Publication' %}: <a href="{{ comment.content_object.get_absolute_url }}">
                 {{ comment.content_object }}
             </a>
         </div>
@@ -16,21 +17,21 @@
         <div class="body">
         {% if comment.parent %}
             <div class="blockquote">
-            <div class="quote-author">{{ comment.parent.get_comment_name }} сказал(а):</div>
+                <div class="quote-author">{{ comment.parent.get_comment_name }} {% trans 'said' %}:</div>
                 {{ comment.parent.comment|striptags|truncatechars:100 }}
             </div>
         {% endif %}
         {{ comment.comment }}
         <ul class="links">
             <li>
-                <a class="button small-button ajax" href="{% url 'comments:edit' comment.pk %}?next={{ request.path }}">Править</a>
+                <a class="button small-button ajax" href="{% url 'comments:edit' comment.pk %}?next={{ request.path }}">{% trans 'edit' %}</a>
             </li>
             <li>
-                <a class="button small-button" href="{% url 'comments:delete' comment.pk %}?next={{ request.path }}">Удалить</a>
+                <a class="button small-button" href="{% url 'comments:delete' comment.pk %}?next={{ request.path }}">{% trans 'delete' %}</a>
             </li>
             {% if request.user.is_staff %}
                 <li>
-                    <a class="button small-button" href="{% url 'comments:status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
+                    <a class="button small-button" href="{% url 'comments:status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}{% trans 'unpublish' %}{% else %}{% trans 'publish' %}{% endif %}</a>
                 </li>
             {% endif %}
         </ul>
@@ -41,13 +42,13 @@
     <div class="pagination">
         <span class="step-links">
             {% if comments.has_previous %}
-            <a href="?p={{ comments.previous_page_number }}#comments">previous</a>
+            <a href="?p={{ comments.previous_page_number }}#comments">{% trans 'previous' %}</a>
             {% endif %}
             <span class="current">
-                Страница {{ comments.number }} из {{ comments.paginator.num_pages }}.
+                {% blocktrans %}Page {{ comments.number }} from {{ comments.paginator.num_pages }}.{% endblocktrans %}
             </span>
             {% if comments.has_next %}
-            <a href="?p={{ comments.next_page_number }}#comments">next</a>
+            <a href="?p={{ comments.next_page_number }}#comments">{% trans 'next' %}</a>
             {% endif %}
         </span>
     </div>

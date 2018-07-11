@@ -75,4 +75,3 @@ def last_comment_datetime(obj):
                                 content_type=ct)
     if qs.exists():
         return formats.date_format(qs.latest('created').created, "SHORT_DATETIME_FORMAT")
-    return 'тишина'

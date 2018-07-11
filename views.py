@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from comments.models import Comment
@@ -92,7 +93,6 @@ class CommentAddUpdateMixin(CommentCommonMixin):
             context['user'] = request.user
             context['form'] = form
             context['csrf_token'] = get_token(self.request)
-            # if self.parent:
             if hasattr(self, 'parent'):
                 context['parent'] = self.parent
             data = {'form': render_to_string("comments/_form.html", context)}
@@ -108,7 +108,7 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         # Анониму шлем мессадж о том что его коммент будет опубликован
         # только после проверки модером.
         if self.request.user.is_anonymous:
-            msg = 'Комментарий отправлен на проверку.'
+            msg = _('Comment was sent for moderation.')
         if self.request.is_ajax():
             data = {}
             if hasattr(self, 'is_update_view'):

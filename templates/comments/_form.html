@@ -1,15 +1,16 @@
+{% load i18n %}
 <div class="form-wraper">
     {% if parent %}
-    <h2>Ваш ответ на комментарий</h2>
+    <h2>{% trans 'Your reply' %}</h2>
     <p>{{ parent.short_comment_text }}</p>
     {% else %}
-    <h2>Ваш комментарий к публикации</h2>
+    <h2>{% trans 'Your comment for the publication' %}</h2>
     {% endif %}
     <form method="post">
         {% csrf_token %}
         <div class="row">
             {% if user.is_authenticated %}
-            Вы авторизированы как <strong>{{ user.username }}</strong>
+            {% trans 'You are logged in as' %} <strong>{{ user.username }}</strong>
         {% endif %}
     {% for field in form %}
         <div class="field-wrapper {{ field.name }}">
@@ -28,8 +29,8 @@
         </div>
         {% if user.is_anonymous %}
         <div class="achtung">
-            Сообщения, содержащие спам, оскорбления, мат или не несущие в себе какого-либо смысла, будут удалены.
+            {% trans 'Messages containing spam, insults or not carrying any meaning, will be deleted.' %}
         </div>
         {% endif %}
-        <input class="button button-primary" type="submit" value="Сохранить"></form>
+        <input class="button button-primary" type="submit" value="{% trans 'Save' %}"></form>
 </div>

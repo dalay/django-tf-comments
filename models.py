@@ -53,6 +53,8 @@ class Comment(models.Model):
         # По-умолчанию сортируем по нисходящей: сначала - последние комменты.
         # Можно изменить в темплейт-теге вызова комментов для объекта.
         ordering = ['-created']
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
 
     @property
     def get_comment_name(self):

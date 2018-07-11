@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 21:47+0300\n"
+"POT-Creation-Date: 2018-07-12 02:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,37 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
+#: admin.py:15 templates/comments/_comment.html:33
+#: templates/comments/unpub_comments.html:34
+msgid "publish"
+msgstr "опубликовать"
+
+#: admin.py:16 templates/comments/_comment.html:33
+#: templates/comments/unpub_comments.html:34
+msgid "unpublish"
+msgstr "снять с публикации"
+
+#: apps.py:7
+msgid "Comments"
+msgstr "Комментарии"
+
+#: forms.py:11
+msgid "Your name"
+msgstr "Ваше имя"
+
+#: models.py:36
+msgid "parent comment"
+msgstr "родительский комментарий"
+
+#: models.py:38
+msgid "user"
+msgstr "пользователь"
+
 #: models.py:39
 msgid "name"
 msgstr "имя"
 
-#: models.py:40
+#: models.py:40 models.py:56
 msgid "comment"
 msgstr "комментарий"
 
@@ -39,3 +65,116 @@ msgstr "обновлен"
 #: models.py:47
 msgid "published"
 msgstr "опубликован"
+
+#: models.py:57
+msgid "comments"
+msgstr "комментарии"
+
+#: tasks.py:14
+msgid "New comment on your site"
+msgstr "Новый комментарий на сайте"
+
+#: templates/comments/_comment.html:16
+#: templates/comments/unpub_comments.html:20
+msgid "said"
+msgstr "сказал(а)"
+
+#: templates/comments/_comment.html:23
+msgid "reply"
+msgstr "ответить"
+
+#: templates/comments/_comment.html:27
+#: templates/comments/unpub_comments.html:27
+msgid "edit"
+msgstr "править"
+
+#: templates/comments/_comment.html:30
+#: templates/comments/unpub_comments.html:30
+msgid "delete"
+msgstr "удалить"
+
+#: templates/comments/_form.html:4
+msgid "Your reply"
+msgstr "Ваш ответ"
+
+#: templates/comments/_form.html:7
+msgid "Your comment for the publication"
+msgstr "Ваш комментарий к публикации"
+
+#: templates/comments/_form.html:13
+msgid "You are logged in as"
+msgstr "Вы авторизированы как"
+
+#: templates/comments/_form.html:32
+msgid ""
+"Messages containing spam, insults or not carrying any meaning, will be "
+"deleted."
+msgstr ""
+"Сообщения, содержащие спам, оскорбления, мат или не несущие в себе какого-"
+"либо смысла, будут удалены."
+
+#: templates/comments/_form.html:35
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/comments/comment_confirm_delete.html:6
+#, python-format
+msgid "Are you sure you want to delete the comment \"%(object)s\"?"
+msgstr "Вы точно решили удалить комментарий \"%(object)s\"?"
+
+#: templates/comments/comment_confirm_delete.html:7
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+#: templates/comments/comments.html:4
+msgid "Add new comment"
+msgstr "Добавить комментарий"
+
+#: templates/comments/mail_base.html:7
+msgid "Notification of new comments"
+msgstr "Уведомление о новых комментариях"
+
+#: templates/comments/notify_comment_onmoderate.html:4
+msgid "A new comment was added to the publication"
+msgstr "Новый комментарий к публикации"
+
+#: templates/comments/notify_comment_onmoderate.html:6
+msgid "This comment is a reply to an existing one"
+msgstr "Данный комментарий является ответом на другой"
+
+#: templates/comments/notify_comment_onmoderate.html:12
+msgid "Author's name"
+msgstr "Имя автора"
+
+#: templates/comments/notify_comment_onmoderate.html:13
+msgid "Author's IP"
+msgstr "IP отправителя"
+
+#: templates/comments/notify_comment_onmoderate.html:15
+msgid "Comment text"
+msgstr "Текст комментария"
+
+#: templates/comments/unpub_comments.html:6
+msgid "Unpublished Comments"
+msgstr "Неопубликованные комментарии"
+
+#: templates/comments/unpub_comments.html:12
+msgid "To Publication"
+msgstr "К публикации"
+
+#: templates/comments/unpub_comments.html:45
+msgid "previous"
+msgstr "пред."
+
+#: templates/comments/unpub_comments.html:48
+#, python-format
+msgid "Page %(comments.number)s from %(comments.paginator.num_pages)s."
+msgstr "Страница %(comments.number)s из %(comments.paginator.num_pages)s."
+
+#: templates/comments/unpub_comments.html:51
+msgid "next"
+msgstr "следующ."
+
+#: views.py:111
+msgid "Comment was sent for moderation."
+msgstr "Комментарий отправлен на моделацию"

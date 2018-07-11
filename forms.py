@@ -1,4 +1,5 @@
-from django.forms import ModelForm, CharField, ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.forms import ModelForm, CharField
 from comments.models import Comment
 
 
@@ -6,7 +7,8 @@ class CommentForm(ModelForm):
     '''
     Форма для нового или редактируемого комментария.
     '''
-    name = CharField(max_length=40, min_length=3, label='Ваше имя', required=True)
+    name = CharField(max_length=40, min_length=3,
+                     label=_('Your name'), required=True)
 
     class Meta:
         model = Comment
@@ -27,7 +29,7 @@ class CommentForm(ModelForm):
         # Убираем поле статуса, если юзер не админ.
         if not user.is_staff:
             del self.fields["status"]
-        # Убираем поле имени, если пользователь авторизован. Оно будет 
+        # Убираем поле имени, если пользователь авторизован. Оно будет
         # подставлено автоматом.
         if user is not None and not user.is_anonymous:
             del self.fields["name"]
