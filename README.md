@@ -24,7 +24,7 @@ cd YOUR_PROJECT_DIR
 git clone https://github.com/dalay/django-tf-comments comments
 ```
 ```python
-# settings.php
+# settings.py
 
 # Application definition
 
