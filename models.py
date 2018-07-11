@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django.core.cache import cache
 from django.db import models
 from django.contrib.auth.models import User
@@ -19,15 +20,11 @@ class CommentCashedManager(models.Manager):
         key = self.cache_key('comments_count', ct.pk, obj.pk)
         count = cache.get(key)
         if not count:
-            count = Comment.objects.filter(object_id=obj.pk, 
-                    content_type=ct).count()
+            count = Comment.objects.filter(object_id=obj.pk,
+                                           content_type=ct).count()
             if count:
                 cache.set(key, count)
         return count
-    
-    # def comments_for_object(self, obj):
-    #     pass
-
 
 
 class Comment(models.Model):
@@ -36,22 +33,18 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     parent = models.ForeignKey('self', related_name="childs",
-                               blank=True, null=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField('имя', max_length=60, blank=True, null=True)
-    comment = models.TextField('комментарий', max_length=3000)
+                               verbose_name=_('parent comment'), blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
+    name = models.CharField(_('name'), max_length=60, blank=True, null=True)
+    comment = models.TextField(_('comment'), max_length=3000)
     email = models.EmailField(blank=True)
-    ip_address = models.GenericIPAddressField(blank=True, null=True)
-
-    # Нижеследующая строка нужна для правильного экспорта из Drupal.
-    # После экспорта ее нужно будет заменить на закомментированную ниже.
-    # created = models.DateTimeField('дата создания', editable=True)
-    created = models.DateTimeField('дата создания',
+    ip_address = models.GenericIPAddressField('IP', blank=True, null=True)
+    created = models.DateTimeField(_('created'),
                                    auto_now_add=True, db_index=True, editable=True)
-
-    updated = models.DateTimeField('дата последнего изменения',
+    updated = models.DateTimeField(_('updated'),
                                    auto_now=True, editable=False)
-    status = models.BooleanField('Опубликовано', db_index=True, default=True)
+    status = models.BooleanField(_('published'), db_index=True, default=True)
 
     cached = CommentCashedManager()
     objects = models.Manager()
