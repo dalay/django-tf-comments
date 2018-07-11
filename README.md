@@ -28,11 +28,11 @@ git clone https://github.com/dalay/django-tf-comments comments
 ```python
 # settings.php
 
-# Application definition                                                                                                                
+# Application definition
 
-INSTALLED_APPS = [ 
-...,
-'comments',
+INSTALLED_APPS = [
+    ...
+    'comments',
 ]
 ```
 ```bash
