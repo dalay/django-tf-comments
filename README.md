@@ -31,10 +31,18 @@ git clone https://github.com/dalay/django-tf-comments comments
 # Application definition
 
 INSTALLED_APPS = [
-    ...
+    ...,
     'comments',
 ]
 ```
 ```bash
 ./manage.py migrate
+```
+## Использование (в шаблоне)
+```pyton
+# some model template file
+...
+{% load comments_tags %}
+...
+{% get_comments SOME_MODEL_OBJECT %}
 ```
