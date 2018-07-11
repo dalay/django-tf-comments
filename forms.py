@@ -31,14 +31,3 @@ class CommentForm(ModelForm):
         # подставлено автоматом.
         if user is not None and not user.is_anonymous:
             del self.fields["name"]
-
-    # def clean(self):
-    #     cleaned_data = super(CommentForm, self).clean()
-    #     comment = cleaned_data.get("comment")
-    #     if len(comment.split()) < 3:
-    #         msg = "Must put 'help' in subject when cc'ing yourself."
-    #         self.add_error('comment', msg)
-    #     raise ValidationError(
-    #         "Did not send for 'help' in the subject despite "
-    #         "CC'ing yourself."
-    #     )
