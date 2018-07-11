@@ -1,7 +1,6 @@
 from django.urls import path
 from comments import views
 from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
 
 
 app_name = 'comments'
@@ -21,7 +20,6 @@ urlpatterns = [
     path('unpublished/', views.UnpublishedCommentsList.as_view(),
          name='unpubleshed-list'),
     # Switching comment status (published/unpublished).
-    path('toggle-status/<int:pk>/',
-         staff_member_required(views.comment_status_toggle),
+    path('toggle-status/<int:pk>/', views.comment_status_toggle,
          name='status-toggle'),
 ]
