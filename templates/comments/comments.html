@@ -1,6 +1,6 @@
 <div id="comments">
     <div id="comments-header">
-        <a class="button button-primary ajax" id="comment-add-new" href="{% url 'comment-new' content_type.id object_id %}">+ Комментировать</a>
+        <a class="button button-primary ajax" id="comment-add-new" href="{% url 'comments:new' content_type.id object_id %}">+ Комментировать</a>
     </div>
     {% for comment in comments %}
         {% include 'comments/_comment.html' with comment=comment %}

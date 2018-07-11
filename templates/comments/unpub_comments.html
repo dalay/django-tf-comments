@@ -23,14 +23,14 @@
         {{ comment.comment }}
         <ul class="links">
             <li>
-                <a class="button small-button ajax" href="{% url 'comment-edit' comment.pk %}?next={{ request.path }}">Править</a>
+                <a class="button small-button ajax" href="{% url 'comments:edit' comment.pk %}?next={{ request.path }}">Править</a>
             </li>
             <li>
-                <a class="button small-button" href="{% url 'comment-delete' comment.pk %}?next={{ request.path }}">Удалить</a>
+                <a class="button small-button" href="{% url 'comments:delete' comment.pk %}?next={{ request.path }}">Удалить</a>
             </li>
             {% if request.user.is_staff %}
                 <li>
-                    <a class="button small-button" href="{% url 'comment-status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
+                    <a class="button small-button" href="{% url 'comments:status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
                 </li>
             {% endif %}
         </ul>

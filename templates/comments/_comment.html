@@ -19,17 +19,17 @@
         {{ comment.comment|safe|linebreaks }}
         <ul class="links">
             <li>
-                <a class="ajax button small-button" href="{% url 'comment-reply' comment.pk %}">Ответить</a>
+                <a class="ajax button small-button" href="{% url 'comments:reply' comment.pk %}">Ответить</a>
             </li>
             {% if request.user.is_staff %}
                 <li>
-                    <a class="ajax button small-button" href="{% url 'comment-edit' comment.pk %}">Править</a>
+                    <a class="ajax button small-button" href="{% url 'comments:edit' comment.pk %}">Править</a>
                 </li>
             <li>
-                <a class=" button small-button" href="{% url 'comment-delete' comment.pk %}">Удалить</a>
+                <a class=" button small-button" href="{% url 'comments:delete' comment.pk %}">Удалить</a>
             </li>
             <li>
-                <a class="button small-button" href="{% url 'comment-status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
+                <a class="button small-button" href="{% url 'comments:status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}Снять с публикации{% else %}Опубликовать{% endif %}</a>
             </li>
             {% endif %}
         </ul>
