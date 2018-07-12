@@ -35,42 +35,35 @@ $(document).on('click', 'a.ajax', function(e) {
     var $this = $(this);
     $this.hide();
     var url = $this.attr('href');
+    var modal = $('<div/>', {
+        class: 'modal comment'
+    });
+    var closeButton = $('<a/>', {
+                href: '#close',
+                class: 'close-button',
+                text: 'x',
+                click: function(e) {
+                     e.preventDefault();
+                     modal.remove();
+                },
+            });
+
     $.ajax({
         type: "GET",
         url: url,
         cache: false,
         success: function(data) {
-            var modal = $('<div/>', {
-                'class': 'modal comment'
-            });
-            var formData = $(data.form).prepend($('<a/>', {
-                'href': '#close',
-                'class': 'close-button',
-                'text': 'x'
-            }));
+            modal.addClass('sucess');
+            var formData = $(data.form).prepend(closeButton);
             modal = modal.html(formData);
             $('form', modal).attr('action', url);
             $('#comments').prepend(modal);
-            $('.close-button').on('click', function(e) {
-                e.preventDefault();
-                modal.remove();
-                $this.show();
-            });
+            $this.show();
         },
         error: function(data) {
-            var modal = $('<div/>', {
-                'class': 'modal comment error',
-            });
+            modal.addClass('error');
             $('#comments').prepend(modal);
-            modal.prepend($('<a/>', {
-                'href': '#close',
-                'class': 'close-button',
-                'text': 'x'
-            }));
-            $('.close-button').on('click', function(e) {
-                e.preventDefault();
-                modal.remove();
-            });
+            modal.prepend(closeButton);
 
             var errors = $.parseJSON(data.responseText);
             $.each(errors, function(index, value) {
