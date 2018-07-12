@@ -1,11 +1,8 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 <div class="error-message">
-<p>Сожалеем, но вы не прошли проверку нашей антиспам-системы,
-и не сможете некоторое время отправлять данные через формы сайта.
-</p>
-<p>Если произошла ошибка, и вы не имели злых умыслов, то приносим наши глубочайшие извинения 
-за глупую машину.
-</p>
+    <p>{% trans 'We are sorry, but you did not pass our antispam system check, and you will not be able to send data for some time through the site forms.' %}</p>
+    <p>{% trans 'Accept our apologies if this happened by mistake.' %}</p>
 </div>
 {% endblock content %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 02:02+0300\n"
+"POT-Creation-Date: 2018-07-12 21:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,6 +129,24 @@ msgstr "Да, удалить"
 #: templates/comments/comments.html:4
 msgid "Add new comment"
 msgstr "Добавить комментарий"
+
+#: templates/comments/comments_antispam_error.html:5
+#: templates/comments/comments_antispam_error_ajax.html:2
+msgid ""
+"We are sorry, but you did not pass our antispam system check, and you will "
+"not be able to send data for some time through the site forms."
+msgstr "Сожалеем, но вы не прошли проверку нашей антиспам-системы, "
+"и не сможете некоторое время отправлять данные через формы сайта."
+
+#: templates/comments/comments_antispam_error.html:6
+#: templates/comments/comments_antispam_error_ajax.html:3
+msgid "Accept our apologies if this happened by mistake."
+msgstr "Если произошла ошибка, и вы не имели злых умыслов, "
+"то приносим наши глубочайшие извинения за глупую машину."
+
+#: templates/comments/comments_antispam_field.html:4
+msgid "You do not need to fill in this field."
+msgstr "Не нужно заполнять это поле"
 
 #: templates/comments/mail_base.html:7
 msgid "Notification of new comments"
