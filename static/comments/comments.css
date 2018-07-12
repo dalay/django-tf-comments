@@ -1,0 +1,115 @@
+.comment {
+    margin-bottom: 2rem;
+}
+.comment .body {
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 100%;
+}
+
+.comment .cite {
+    background: #ddd none repeat scroll 0 0;
+    border-radius: 1rem;
+    font-size: 90%;
+    font-style: italic;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.comment .author-info a {
+    display: block;
+}
+.quote-author, .comment-name {
+    font-weight: bolder;
+}
+.comments.title {
+    border-bottom: 1px dotted #ddd;
+    margin: 2rem 0 1rem;
+    padding-bottom: 1rem;
+}
+#comments-header {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+.modal .form-wraper, .modal .error-message {
+    border-radius: 1rem;
+    border-width: 0.5em;
+    box-shadow: 0 1px 12px rgba(50, 50, 50, 0.84);
+    padding: 2rem;
+    position: relative;
+}
+.modal .form-wraper {
+    background-color: #fff;
+    width: 50%;
+}
+.close-button {
+    background: #606061 none repeat scroll 0 0;
+    border-radius: 30px;
+    box-shadow: 1px 1px 3px #000;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 35px;
+    padding: 0;
+    position: absolute;
+    right: -5px;
+    text-align: center;
+    text-decoration: none;
+    top: -5px;
+    width: 40px;
+}
+.close-button:hover {
+    background: #00d9ff;
+}
+input,
+textarea,
+select {
+    width: 100%;
+}
+.modal .error-message {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+.modal.error .error-message {
+    width: 50%;
+    min-width: 200px;
+    margin: 10% auto;
+}
+.modal.error .close-button {
+    right: 5px;
+    top: 5px;
+}
+.comment li {
+    display: inline;
+}
+.blockquote {
+    font-family: Georgia, serif;
+    font-style: italic;
+    margin: 0.5rem 0 1rem;
+    padding: 0.5em 50px;
+    line-height: 1.45;
+    position: relative;
+    color: #383838;
+    background:#ececec;
+    border-radius: 1rem;
+}
+
+.blockquote:before {
+    display: block;
+    content: "\201C";
+    font-size: 80px;
+    position: absolute;
+    left: 0;
+    top: -10px;
+    color: #7a7a7a;
+}
+.comment-name {
+    display: inline;
+}
+.comment-name::after {
+    content: '|';
+    padding: 0 .5rem;
+}
