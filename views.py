@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
-from antispam.decorators import check_antispam
+from .antispam import check_antispam
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
