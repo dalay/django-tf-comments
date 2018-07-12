@@ -18,11 +18,12 @@
 Демонстрация работы модуля на "живом" сайте - [тут](https://turfront.ru/pub-233#comments).
 
 ## Установка
-
+1. Переходим в корневую директорию проекта.
 ```bash
 cd YOUR_PROJECT_DIR
 git clone https://github.com/dalay/django-tf-comments comments
 ```
+2. Прописываем приложение в INSTALLED_APPS файла настроек.
 ```python
 # settings.py
 
@@ -34,11 +35,41 @@ INSTALLED_APPS = [
 ]
 ...
 
-COMMENTS_ON_PAGE = 20 # по-умолчанию, если не указывать,
+# НАСТРОЙКИ ###########################################
+COMMENTS_ON_PAGE = 10 # по-умолчанию, если не указывать,
                       # выводится 10 комментариев (с пейджером, если их больше) 
+# Функционал антиспама
+COMMENTS_ANTISPAM_FIELD_NAME = 'homepage' # имя для поля-"заманухи" (honeypot)  в форме
+                                          # комментариев
+COMMENTS_ANTISPAM_BAN_INTERVAL = 600 # если заполнено поле honeypot, баним по IP на
+                                     # время, заданное данной настройкой, в секундах
 ```
+3. Запускаем миграции.
 ```bash
 ./manage.py migrate
+```
+4. Добавляем в основной urls.py обработчик роутов приложения.
+```python
+urlpatterns = [
+    ...,
+    path('comments/', include('comments.urls')),
+]
+```
+5. В базовом шаблоне (который обычно base.html) подключаем скрипт для обработки ajax-запросов и стили 
+для базового отображения омментариев.
+```html
+<!-- BASE.HTML -->
+...
+{% block css %}
+...
+<link href="{% static 'comments/comments.css' %}" rel="stylesheet">
+{% endblock css %}
+...
+{% block js%}
+...
+<script src="{% static 'comments/comments.js' %}"></script>
+{% endblock js%}
+...
 ```
 ## Использование (в шаблоне)
 ```html
