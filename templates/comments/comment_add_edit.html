@@ -5,8 +5,3 @@
 </h1>
 {% include "comments/_form.html" %}
 {% endblock content %}
-{% load static %}
-{% block scripts %}
-{{ block.super }}
-<script src="{% static 'comments/comments.js' %}"></script>
-{% endblock scripts %}
