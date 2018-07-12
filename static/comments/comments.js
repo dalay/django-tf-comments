@@ -55,12 +55,11 @@ $(document).on('click', 'a.ajax', function(e) {
                 e.preventDefault();
                 modal.remove();
                 $this.show();
-            })
+            });
         },
         error: function(data) {
             var modal = $('<div/>', {
-                'class': 'modal',
-                'style': "width: 50%"
+                'class': 'modal comment error',
             });
             $('#comments').prepend(modal);
             modal.prepend($('<a/>', {
@@ -71,7 +70,7 @@ $(document).on('click', 'a.ajax', function(e) {
             $('.close-button').on('click', function(e) {
                 e.preventDefault();
                 modal.remove();
-            })
+            });
 
             var errors = $.parseJSON(data.responseText);
             $.each(errors, function(index, value) {
@@ -80,18 +79,18 @@ $(document).on('click', 'a.ajax', function(e) {
             });
         }
     });
-})
+});
 
 // Обрабатываем подгруженную аяксом форму.
 $(document).on('submit', '.modal form', function(e) {
     e.preventDefault();
-    var data = {}
+    var data = {};
     $.each($(':input', '.modal form'),function(k){
         data[$(this).attr('name')] = $(this).val();
     });
 
     var $this = $(this);
-    var modal = $this.parents('.modal')
+    var modal = $this.parents('.modal');
     modal.hide();
 
     $.ajax({
@@ -112,7 +111,7 @@ $(document).on('submit', '.modal form', function(e) {
                 $this.parent('.form-wraper').addClass('message info').html(msg);
                 modal.show();
                 setTimeout(function() {
-                        modal.remove();
+                    modal.remove();
                 }, 4000);
             }
             else{
@@ -141,4 +140,4 @@ $(document).on('submit', '.modal form', function(e) {
             });
         }
     });
-})
+});
