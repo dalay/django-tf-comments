@@ -6,7 +6,7 @@
 {% include "comments/_form.html" %}
 {% endblock content %}
 {% block scripts %}
-{% load staticfiles %}
+{% load static %}
 {{ block.super }}
 <script src="{% static 'comments/comments.js' %}"></script>
 {% endblock scripts %}
