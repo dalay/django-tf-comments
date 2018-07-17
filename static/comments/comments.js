@@ -39,14 +39,14 @@ $(document).on('click', 'a.ajax', function(e) {
         class: 'modal comment'
     });
     var closeButton = $('<a/>', {
-                href: '#close',
-                class: 'close-button',
-                text: 'x',
-                click: function(e) {
-                     e.preventDefault();
-                     modal.remove();
-                },
-            });
+        href: '#close',
+        class: 'close-button',
+        text: 'x',
+        click: function(e) {
+            e.preventDefault();
+            modal.remove();
+        },
+    });
 
     $.ajax({
         type: "GET",
@@ -82,14 +82,14 @@ $(document).on('submit', '.modal form', function(e) {
         data[$(this).attr('name')] = $(this).val();
     });
 
-    var $this = $(this);
-    var modal = $this.parents('.modal');
+    var $form = $(this);
+    var modal = $form.parents('.modal');
     modal.hide();
 
     $.ajax({
         type: "POST",
         data: data,
-        url: $this.attr('action'),
+        url: $form.attr('action'),
         cache: false,
         success: function(data) {
             if (data.is_update_view) {
@@ -101,7 +101,7 @@ $(document).on('submit', '.modal form', function(e) {
                 var msg = $('<div/>', {
                     'class': 'messages-ajax info',
                 }).html(data.flash_message);
-                $this.parent('.form-wraper').addClass('message info').html(msg);
+                $form.parent('.form-wraper').addClass('message info').html(msg);
                 modal.show();
                 setTimeout(function() {
                     modal.remove();
@@ -113,22 +113,24 @@ $(document).on('submit', '.modal form', function(e) {
             $('a.ajax').show();
         },
         error: function(data) {
-            var errors = $.parseJSON(data.responseText);
-            var msg, idx;
+            let errors = $.parseJSON(data.responseText);
+            let msg, idx;
             $('.error-message').hide();
             $.each(errors, function(index, value) {
                 msg = '<div class="error-message">' + value + '</div>';
                 if (index == '__all__') {
                     if (data.status == 403) {
-                        $this.html(msg);
+                        $form.html(msg);
                         return;
                     }
-                    $this.prepend(msg);
+                    modal.remove();
+                    $form.prepend(msg);
                 }
                 else {
-                    idx = $("#id_" + index);
+                    idx = $('#id_' + index + ', [data-id="id_' + index + '"]', $form);
                     idx.css('border', '2px solid red');
                     idx.before(msg);
+                    modal.show();
                 }
             });
         }

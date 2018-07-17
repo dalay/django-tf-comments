@@ -11,7 +11,6 @@ from django.template.loader import render_to_string
 from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
-from .antispam import check_antispam
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
@@ -139,7 +138,6 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
     '''
     Создание нового коммента.
     '''
-    @method_decorator(check_antispam)
     def dispatch(self, *args, **kwargs):
         """
         Присваиваем и, заодно, проверяем на существование
