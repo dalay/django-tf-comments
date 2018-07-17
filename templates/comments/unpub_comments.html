@@ -3,14 +3,14 @@
 {% block content %}
 <div id="raw comments" class="unpublished">
     <div id="comments-header">
-        <h3 class="comments title">{% trans 'Unpublished Comments' %}</h3>
+        <h1 class="comments title">{% trans 'Unpublished Comments' %}</h1>
     </div>
     {% for comment in comments %}
     <div class="comment">
         <div class="comment-info">
         <div class="comment-object">
             {% trans 'To Publication' %}: <a href="{{ comment.content_object.get_absolute_url }}">
-                {{ comment.content_object }}
+                <h3>{{ comment.content_object }}</h3>
             </a>
         </div>
             {{ comment.name }} | {{ comment.created }} | {{ comment.ip_address }}</div>

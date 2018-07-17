@@ -18,7 +18,7 @@ urlpatterns = [
     path('reply/<int:pk>/', views.CommentReply.as_view(), name='reply'),
     # A page with a list of unpublished comments.
     path('unpublished/', views.UnpublishedCommentsList.as_view(),
-         name='unpubleshed-list'),
+         name='unpublished-list'),
     # Switching comment status (published/unpublished).
     path('toggle-status/<int:pk>/', views.comment_status_toggle,
          name='status-toggle'),
