@@ -28,6 +28,6 @@ def notify_comment_onmoderate(comment_pk):
     email.send()
 
 
-@receiver(comment_added_onmoderate)
-def set_queue(sender, comment, **kwargs):
+@receiver(comment_added_onmoderate, sender=Comment)
+def set_queue_comment_added_onmoderate(sender, comment, **kwargs):
     notify_comment_onmoderate.delay(comment.pk)

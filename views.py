@@ -178,7 +178,8 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
             form.instance.object_id = self.parent.object_id
         else:
             form.instance.object_id = self.kwargs['object_id']
-        form.instance.status = user.is_authenticated
+        if user.is_anonymous:
+            form.instance.status = False
         return super(CommentCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
