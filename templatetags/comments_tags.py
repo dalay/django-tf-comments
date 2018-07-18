@@ -18,7 +18,7 @@ def comments_count(obj):
     return Comment.cached.object_comments_count(obj)
 
 
-@register.inclusion_tag('comments/latest_commetns.html')
+@register.inclusion_tag('comments/latest_comments.html')
 def latest_comments(limit=5, obj=None):
     '''
     Получаем последние комменты со статусом True.
