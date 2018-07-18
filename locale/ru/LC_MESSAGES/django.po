@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-18 16:57+0300\n"
+"POT-Creation-Date: 2018-07-18 18:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,10 +70,6 @@ msgstr "опубликован"
 msgid "comments"
 msgstr "комментарии"
 
-#: tasks.py:13
-msgid "New comment on your site"
-msgstr "Новый комментарий на сайте"
-
 #: templates/comments/_comment.html:16
 #: templates/comments/unpub_comments.html:20
 msgid "said"
@@ -129,35 +125,6 @@ msgstr "Да, удалить"
 #: templates/comments/comments.html:4
 msgid "Add new comment"
 msgstr "Добавить комментарий"
-
-#: templates/comments/mail_base.html:7
-msgid "Notification of new comments"
-msgstr "Уведомление о новых комментариях"
-
-#: templates/comments/notify_comment_onmoderate.html:4
-#: templates/comments/notify_new_comment_posted.html:4
-msgid "A new comment was added to the publication"
-msgstr "Новый комментарий к публикации"
-
-#: templates/comments/notify_comment_onmoderate.html:6
-#: templates/comments/notify_new_comment_posted.html:6
-msgid "This comment is a reply to an existing one"
-msgstr "Данный комментарий является ответом на другой"
-
-#: templates/comments/notify_comment_onmoderate.html:12
-#: templates/comments/notify_new_comment_posted.html:12
-msgid "Author's name"
-msgstr "Имя автора"
-
-#: templates/comments/notify_comment_onmoderate.html:13
-#: templates/comments/notify_new_comment_posted.html:13
-msgid "Author's IP"
-msgstr "IP отправителя"
-
-#: templates/comments/notify_comment_onmoderate.html:15
-#: templates/comments/notify_new_comment_posted.html:15
-msgid "Comment text"
-msgstr "Текст комментария"
 
 #: templates/comments/unpub_comments.html:6
 msgid "Unpublished Comments"
