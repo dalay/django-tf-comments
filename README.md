@@ -4,13 +4,11 @@
 
 ## Возможности
 
-- Все на Ajax.
-- Таски выполняются ассинхронно, через [RQ (Redis Queue)](https://python-rq.org/).
+- Добавление и редактирование комментариев - на Ajax.
 - Защита от спама: если стоит reCAPTCHA, то используется для анонимных пользователей.
 
 ## Зависимости
 
-- [django-rq](https://github.com/rq/django-rq)
 - [django-recaptcha](https://github.com/praekelt/django-recaptcha) (опционально, если нужна для анонимов)
 - Django >= 2.0
 - Python >=3.5 (на других не тестировалось)
