@@ -276,4 +276,4 @@ def comment_status_toggle(request, pk):
     next = request.GET.get('next', False)
     if next:
         return redirect(next)
-    return redirect('comments-unpubleshed-list')
+    return redirect('comments:unpublished-list')
