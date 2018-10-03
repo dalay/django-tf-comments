@@ -45,7 +45,7 @@ class Comment(models.Model):
     updated = models.DateTimeField(_('updated'),
                                    auto_now=True, editable=False)
     status = models.BooleanField(_('published'), db_index=True, default=True)
-    is_new = models.BooleanField(default=True, editable=False)
+    # is_new = models.BooleanField(default=True, editable=False)
 
     cached = CommentCashedManager()
     objects = models.Manager()
@@ -81,13 +81,13 @@ class Comment(models.Model):
         '''
         При сохранении коммента отправляем соответствующий сигнал.
         '''
+        is_new = self.pk is None
         super(Comment, self).save(*args, **kwargs)
-        if self.is_new:
+        if is_new:
             if not self.status:
                 comment_added_onmoderate.send(sender=self.__class__, comment=self)
             else:
                 comment_new_comment_posted.send(sender=self.__class__, comment=self)
-                self.is_new = False
 
     def __str__(self):
         return self.short_comment_text
