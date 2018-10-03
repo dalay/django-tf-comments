@@ -6,7 +6,7 @@
         <h1 class="comments title">{% trans 'Unpublished Comments' %}</h1>
     </div>
     {% for comment in comments %}
-    <div class="comment">
+    <div id="comment-{{ comment.id }}" class="comment">
         <div class="comment-info">
         <div class="comment-object">
             {% trans 'To Publication' %}: <a href="{{ comment.content_object.get_absolute_url }}">
