@@ -45,7 +45,6 @@ class Comment(models.Model):
     updated = models.DateTimeField(_('updated'),
                                    auto_now=True, editable=False)
     status = models.BooleanField(_('published'), db_index=True, default=True)
-    # is_new = models.BooleanField(default=True, editable=False)
 
     cached = CommentCashedManager()
     objects = models.Manager()

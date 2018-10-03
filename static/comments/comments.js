@@ -79,7 +79,14 @@ $(document).on('submit', '.modal form', function(e) {
     e.preventDefault();
     var data = {};
     $.each($(':input', '.modal form'),function(k){
-        data[$(this).attr('name')] = $(this).val();
+        let elName = $(this).attr('name');
+        if (elName != undefined) {
+            let elValue = $(this).val();
+            if ($(this).attr('type') == 'checkbox') {
+                elValue = $(this)[0].checked;
+            }
+            data[elName] = elValue;
+        }
     });
 
     var $form = $(this);
