@@ -75,10 +75,10 @@ $(document).on('click', 'a.ajax', function(e) {
 });
 
 // Обрабатываем подгруженную аяксом форму.
-$(document).on('submit', '.modal form', function(e) {
+$('#comments').on('submit', '.modal form', function(e) {
     e.preventDefault();
     var data = {};
-    $.each($(':input', '.modal form'),function(k){
+    $.each($(':input', $(this)),function(k){
         let elName = $(this).attr('name');
         if (elName != undefined) {
             let elValue = $(this).val();
