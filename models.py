@@ -4,7 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from comments.signals import comment_added_onmoderate, comment_new_comment_posted
+from comments.signals import (comment_added_onmoderate,
+                              comment_new_comment_posted, comment_published_updated)
 
 
 class CommentCashedManager(models.Manager):
@@ -80,6 +81,9 @@ class Comment(models.Model):
         '''
         При сохранении коммента отправляем соответствующий сигнал.
         '''
+        if self.status:
+            # Обновлен коммент, опубликованный на сайте.
+            comment_published_updated.send(sender=self.__class__, comment=self)
         is_new = self.pk is None
         super(Comment, self).save(*args, **kwargs)
         if is_new:
