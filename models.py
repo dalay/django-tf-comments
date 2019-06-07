@@ -57,6 +57,10 @@ class Comment(models.Model):
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
 
+    def __init__(self, *args, **kwargs):
+        super(Comment, self).__init__(*args, **kwargs)
+        self._original_status = self.status
+
     @property
     def get_comment_name(self):
         '''
@@ -81,7 +85,7 @@ class Comment(models.Model):
         '''
         При сохранении коммента отправляем соответствующий сигнал.
         '''
-        if self.status:
+        if self._original_status != self.status:
             # Обновлен коммент, опубликованный на сайте.
             comment_published_updated.send(sender=self.__class__, comment=self)
         is_new = self.pk is None

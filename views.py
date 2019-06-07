@@ -14,6 +14,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
+from .signals import comment_published_updated
 
 
 class UnpublishedCommentsList(ListView):
@@ -272,7 +273,9 @@ def comment_status_toggle(request, pk):
     except Comment.DoesNotExist:
         raise Http404
 
-    Comment.objects.filter(pk=pk).update(status=not bool(cur_status))
+    comment = Comment.objects.filter(pk=pk)
+    comment.update(status=not bool(cur_status))
+    comment_published_updated.send(sender=comment.__class__)
     next = request.GET.get('next', False)
     if next:
         return redirect(next)
