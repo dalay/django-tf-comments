@@ -276,8 +276,6 @@ def comment_status_toggle(request, pk):
     comment.status = not bool(comment.status)
     comment.save(update_fields=['status'])
 
-    comment_published_updated.send(sender=Comment, comment=comment)
-
     next = request.GET.get('next', False)
     if next:
         return redirect(next)
