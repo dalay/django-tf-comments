@@ -14,6 +14,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
+
 from .signals import comment_published_updated
 
 
@@ -268,14 +269,15 @@ def comment_status_toggle(request, pk):
     Переключение статуса комментария (опубликован/неопубликова).
     '''
     try:
-        cur_status = Comment.objects.values_list(
-            'status', flat=True).get(pk=pk)
+        comment = Comment.objects.get(pk=pk)
     except Comment.DoesNotExist:
         raise Http404
 
-    comment = Comment.objects.filter(pk=pk)
-    comment.update(status=not bool(cur_status))
-    comment_published_updated.send(sender=comment.__class__)
+    comment.status = not bool(comment.status)
+    comment.save(update_fields=['status'])
+
+    comment_published_updated.send(sender=Comment, comment=comment)
+
     next = request.GET.get('next', False)
     if next:
         return redirect(next)
