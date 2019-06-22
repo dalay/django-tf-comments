@@ -19,7 +19,7 @@ def comments_count(obj):
 
 
 @register.simple_tag
-def unpublished_comments_count(obj):
+def unpublished_comments_count():
     '''
     Счетчик неопубликованных комментов.
     '''
