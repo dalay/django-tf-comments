@@ -273,7 +273,7 @@ def comment_status_toggle(request, pk):
 
     comment.status = not bool(comment.status)
     comment.save(update_fields=['status'])
-    msg = _('Comment %(comment)s has been %(status)s') % {
+    msg = _('Comment "%(comment)s" has been %(status)s') % {
         'comment': comment.short_comment_text,
         'status': 'disabled' if not comment.status else 'posted'
     }
