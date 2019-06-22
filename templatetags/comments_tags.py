@@ -18,6 +18,14 @@ def comments_count(obj):
     return Comment.cached.object_comments_count(obj)
 
 
+@register.simple_tag
+def unpublished_comments_count(obj):
+    '''
+    Счетчик неопубликованных комментов.
+    '''
+    return Comment.objects.filter(status=False).count()
+
+
 @register.inclusion_tag('comments/latest_comments.html')
 def latest_comments(limit=5, model=None):
     '''

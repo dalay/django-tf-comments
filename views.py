@@ -15,8 +15,6 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
 
-from .signals import comment_published_updated
-
 
 class UnpublishedCommentsList(ListView):
     '''
@@ -275,6 +273,11 @@ def comment_status_toggle(request, pk):
 
     comment.status = not bool(comment.status)
     comment.save(update_fields=['status'])
+    msg = _('Comment %(comment)s has been %(status)s') % {
+        'comment': comment.short_comment_text,
+        'status': 'disabled' if not comment.status else 'posted'
+    }
+    messages.add_message(request, messages.INFO, msg)
 
     next = request.GET.get('next', False)
     if next:
