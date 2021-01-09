@@ -1,8 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
-from comments.models import Comment
-from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
@@ -14,6 +12,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
+
+from .models import Comment
+from .forms import CommentForm
 
 
 class UnpublishedCommentsList(ListView):
@@ -31,10 +33,10 @@ class UnpublishedCommentsList(ListView):
         '''
         Проверка доступа - только для админов.
         '''
-        return super(UnpublishedCommentsList, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
 
-class CommentCommonMixin(object):
+class CommentCommonMixin:
     '''
     "Общий" миксин для формы коммента.
     Проверяем в нем права пользователя и определяем страницу для редиректа
@@ -74,7 +76,7 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         Передаем для формы добавдения/правки комментария
         обьект текущего пользователя.
         """
-        kwargs = super(CommentAddUpdateMixin, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({
             'user': self.request.user})
         return kwargs
@@ -96,13 +98,13 @@ class CommentAddUpdateMixin(CommentCommonMixin):
                 context['parent'] = self.parent
             data = {'form': render_to_string("comments/_form.html", context)}
             return JsonResponse(data)
-        return super(CommentAddUpdateMixin, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         '''
         Обработка аякс-запроса, когда поля формы проверены и валидны.
         '''
-        response = super(CommentAddUpdateMixin, self).form_valid(form)
+        response = super().form_valid(form)
         msg = ''
         # Анониму шлем мессадж о том что его коммент будет опубликован
         # только после проверки модером.
@@ -128,12 +130,13 @@ class CommentAddUpdateMixin(CommentCommonMixin):
         '''
         Обработка аякс-запроса, когда поля формы не прошли валидацию.
         '''
-        response = super(CommentAddUpdateMixin, self).form_invalid(form)
+        response = super().form_invalid(form)
         if self.request.is_ajax():
             return JsonResponse(form.errors, status=400)
         return response
 
 
+@method_decorator(login_required, name='dispatch')
 class CommentCreate(CommentAddUpdateMixin, CreateView):
     '''
     Создание нового коммента.
@@ -156,7 +159,7 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
                 ContentType, pk=self.kwargs['content_type_id'])
             self.obj = get_object_or_404(self.obj_content_type.model_class(),
                                          pk=self.kwargs['object_id'])
-        return super(CommentCreate, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         '''
@@ -180,13 +183,13 @@ class CommentCreate(CommentAddUpdateMixin, CreateView):
             form.instance.object_id = self.kwargs['object_id']
         if user.is_anonymous:
             form.instance.status = False
-        return super(CommentCreate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         '''
         Добавляем комментируемый объект в контекст коммента.
         '''
-        context = super(CommentCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['object'] = self.obj
         if self.parent:
             context['parent'] = self.parent
@@ -220,13 +223,13 @@ class CommentUpdate(CommentAddUpdateMixin, UpdateView):
         # redirect = self.request.GET.get('next')
         # if redirect:
         #     self.success_url = redirect
-        return super(CommentUpdate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_object(self, *args, **kwargs):
         '''
         Проверяем права на редактирование коммента.
         '''
-        comment = super(CommentUpdate, self).get_object(*args, **kwargs)
+        comment = super().get_object(*args, **kwargs)
         self.check_permissions(comment)
         return comment
 
@@ -242,7 +245,7 @@ class CommentDelete(CommentCommonMixin, DeleteView):
         '''
         Проверка прав пользованетя на удаление.
         '''
-        comment = super(CommentDelete, self).get_object(*args, **kwargs)
+        comment = super().get_object(*args, **kwargs)
         self.check_permissions(comment)
         return comment
 

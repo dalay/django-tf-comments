@@ -1,36 +1,36 @@
-{% load i18n %}
 <div class="row comment" id="comment-{{ comment.id }}">
     <div class="author-info">
         <div class="comment-name">
             {% if comment.name %}
-        {{ comment.name }} | {{ comment.ip_address }}
-    {% else %}
-        {{ comment.user }}
-    {% endif %}
+            {{ comment.name }} | {{ comment.ip_address }}
+            {% else %}
+            {{ comment.user }}
+            {% endif %}
         </div>
         <small class="submitted">{{ comment.created }}</small>
     </div>
     <div class="body">
         {% if comment.parent %}
         <div class="blockquote">
-            <div class="quote-author">{{ comment.parent.get_comment_name }} {% trans 'said' %}:</div>
+            <div class="quote-author">{{ comment.parent.get_comment_name }} сказал(а):</div>
             {{ comment.parent.comment|striptags|truncatechars:100 }}
         </div>
         {% endif %}
         {{ comment.comment|safe|linebreaks }}
         <ul class="links">
             <li>
-                <a class="ajax button small-button" href="{% url 'comments:reply' comment.pk %}">{% trans 'reply' %}</a>
+                <a class="{% if request.user.is_authenticated %}ajax {% endif %}button small-button"
+                   href="{% url 'comments:reply' comment.pk %}">ответить</a>
             </li>
             {% if request.user.is_staff %}
-                <li>
-                    <a class="ajax button small-button" href="{% url 'comments:edit' comment.pk %}">{% trans 'edit' %}</a>
-                </li>
             <li>
-                <a class=" button small-button" href="{% url 'comments:delete' comment.pk %}">{% trans 'delete' %}</a>
+                <a class="ajax button small-button" href="{% url 'comments:edit' comment.pk %}">править</a>
             </li>
             <li>
-                <a class="button small-button" href="{% url 'comments:status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}{% trans 'unpublish' %}{% else %}{% trans 'publish' %}{% endif %}</a>
+                <a class=" button small-button" href="{% url 'comments:delete' comment.pk %}">удалить</a>
+            </li>
+            <li>
+                <a class="button small-button" href="{% url 'comments:status-toggle' comment.pk %}?next={{ request.path }}">{% if comment.status %}снять с публикации{% else %}опубликовать{% endif %}</a>
             </li>
             {% endif %}
         </ul>
