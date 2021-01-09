@@ -1,7 +1,6 @@
-{% load i18n %}
 <div id="comments">
     <div id="comments-header">
-        <a class="button button-primary ajax" id="comment-add-new" href="{% url 'comments:new' content_type.id object_id %}">+ {% trans 'Add new comment' %}</a>
+        <a class="button button-primary{% if request.user.is_authenticated %} ajax{% endif %}" id="comment-add-new" href="{% url 'comments:new' content_type.id object_id %}">+ добавить комментарий</a>
     </div>
     {% for comment in comments %}
         {% include 'comments/_comment.html' with comment=comment %}
